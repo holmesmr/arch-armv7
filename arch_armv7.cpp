@@ -3014,6 +3014,25 @@ public:
 	}
 };
 
+class ArmCOFFRelocationHandler: public RelocationHandler
+{
+public:
+	virtual bool GetRelocationInfo(Ref<BinaryView> view, Ref<Architecture> arch, vector<BNRelocationInfo>& result) override
+	{
+		(void)view;
+		(void)arch;
+		set<uint64_t> relocTypes;
+		for (auto& reloc: result)
+		{
+			reloc.type = UnhandledRelocation;
+			relocTypes.insert(reloc.nativeType);
+		}
+		for (auto& reloc : relocTypes)
+			LogWarn("Unsupported COFF relocation %s", GetRelocationString((PeArmRelocationType)reloc));
+		return false;
+	}
+};
+
 
 static void RegisterArmSettings()
 {
