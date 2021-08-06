@@ -3332,7 +3332,7 @@ public:
 				int32_t newTarget = (target + (info.implicitAddend ? (mov->imm4 << 12 | mov->imm12) : info.addend));
 				_target *targetHiLo = (_target*)&newTarget;
 
-				LogWarn("sizeof(_target) = %u, target: 0x%" PRIx64, sizeof(_target), target);
+				LogWarn("sizeof(_target) = %lu, target: 0x%" PRIx64, sizeof(_target), target);
 				LogWarn("targetHiLo[0].imm12: 0x%02x", targetHiLo[0].imm12);
 				LogWarn("targetHiLo[0].imm4: 0x%02x", targetHiLo[0].imm4);
 				LogWarn("targetHiLo[1].imm12: 0x%02x", targetHiLo[1].imm12);
