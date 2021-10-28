@@ -21,7 +21,7 @@ using namespace std;
 #define snprintf _snprintf
 #endif
 
-#define DEBUG_COFF LogWarn
+// #define DEBUG_COFF LogDebug
 
 #define DISASM_SUCCESS 0
 #define FAILED_TO_DISASSEMBLE_OPERAND 1
