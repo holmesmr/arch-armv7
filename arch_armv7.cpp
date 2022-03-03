@@ -712,6 +712,8 @@ protected:
 					result.archTransitionByTargetAddr = true;
 				}
 			}
+			else if (instr.operands[0].cls == REG && instr.operands[0].reg == REG_LR)
+				result.AddBranch(FalseBranch, addr + 4, this);
 			break;
 		case ARMV7_B:
 			if (UNCONDITIONAL(instr.cond))
