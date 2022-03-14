@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <exception>
-#include <uitypes.h>
 
 #include "binaryninjaapi.h"
 #include "lowlevelilinstruction.h"
@@ -1602,7 +1601,7 @@ public:
 			if ((instr.operation == ARMV7_MOV) && (instr.operands[0].cls == REG) && (instr.operands[0].reg == REG_LR) && (instr.operands[1].cls == REG) && (instr.operands[1].reg == REG_PC))
 			{
 				Instruction branchInstr;
-				if (Disassemble(data + 4, addr + 4, len - 4, branchInstr) && UNCONDITIONAL(branchInstr.cond) && (branchInstr.operands[0].cls == REG) && (branchInstr.operands[0].reg == REG_PC))
+				if (Disassemble(data + 4, addr + 4, len - 4, branchInstr, m_features) && UNCONDITIONAL(branchInstr.cond) && (branchInstr.operands[0].cls == REG) && (branchInstr.operands[0].reg == REG_PC))
 				{
 					switch (branchInstr.operation)
 					{
@@ -1648,7 +1647,7 @@ ArmCommonArchitecture::ArmCommonArchitecture(const char* name, BNEndianness endi
 {
 	m_features = armv7::FEAT_ALL;
 
-	SettingsRef settings = BinaryNinja::Settings::Instance();
+	Ref<Settings> settings = BinaryNinja::Settings::Instance();
 	auto allowed = settings->Get<bool>(settingAllowedFeaturesOnly);
 	assert(m_features == 0x7FF);
 
@@ -3072,7 +3071,7 @@ public:
 
 static void RegisterArmSettings()
 {
-	SettingsRef settings = BinaryNinja::Settings::Instance();
+	Ref<Settings> settings = BinaryNinja::Settings::Instance();
 
 	settings->RegisterGroup("arch", "Architecture");
 	settings->RegisterSetting(settingAllowedFeaturesOnly,
